@@ -1,0 +1,518 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3273C352-D579-43E6-8B44-A0A1F8CF64CC}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>prjGroupB</RootNamespace>
+    <AssemblyName>prjGroupB</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\CAttraction.cs" />
+    <Compile Include="Models\CAttractionCategory.cs" />
+    <Compile Include="Models\CAttractionComment.cs" />
+    <Compile Include="Models\CAttractionManager.cs" />
+    <Compile Include="Models\CAttractionRecommendation.cs" />
+    <Compile Include="Models\CAttractionTag.cs" />
+    <Compile Include="Models\CAttractionTicket.cs" />
+    <Compile Include="Models\CAttractionUserFavorite.cs" />
+    <Compile Include="Models\CAttractionImage.cs" />
+    <Compile Include="Models\CEventCategories.cs" />
+    <Compile Include="Models\CEventCategoryMapping.cs" />
+    <Compile Include="Models\CEventImage.cs" />
+    <Compile Include="Models\CEventRegistrationForm.cs" />
+    <Compile Include="Models\CEvents.cs" />
+    <Compile Include="Models\CPostPictureManager.cs" />
+    <Compile Include="Models\COrder.cs" />
+    <Compile Include="Models\COrder1.cs" />
+    <Compile Include="Models\COrderManagement.cs" />
+    <Compile Include="Models\CProduct.cs" />
+    <Compile Include="Models\CPost.cs" />
+    <Compile Include="Models\CPostManager.cs" />
+    <Compile Include="Models\CProductDisplay.cs" />
+    <Compile Include="Models\CProductImage.cs" />
+    <Compile Include="Models\CUserSession.cs" />
+    <Compile Include="Models\EventComboboxItem.cs" />
+    <Compile Include="Views\EventImageBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\EventImageBox.Designer.cs">
+      <DependentUpon>EventImageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomImageBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\CustomImageBox.Designer.cs">
+      <DependentUpon>CustomImageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\fieldBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\fieldBox.Designer.cs">
+      <DependentUpon>fieldBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\fieldBox1.cs" />
+    <Compile Include="Views\FormAttractionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionEditor.Designer.cs">
+      <DependentUpon>FormAttractionEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormAttractionList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionList.Designer.cs">
+      <DependentUpon>FormAttractionList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormAttractionMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionMain.Designer.cs">
+      <DependentUpon>FormAttractionMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormAttractionCategoryEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionCategoryEditor.Designer.cs">
+      <DependentUpon>FormAttractionCategoryEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormAttractionCategoryList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionCategoryList.Designer.cs">
+      <DependentUpon>FormAttractionCategoryList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormAttractionCommentEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionCommentEditor.Designer.cs">
+      <DependentUpon>FormAttractionCommentEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormAttractionCommentList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionCommentList.Designer.cs">
+      <DependentUpon>FormAttractionCommentList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormAttractionImageEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionImageEditor.Designer.cs">
+      <DependentUpon>FormAttractionImageEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormAttractionImageList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionImageList.Designer.cs">
+      <DependentUpon>FormAttractionImageList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormAttractionRecommendationEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionRecommendationEditor.Designer.cs">
+      <DependentUpon>FormAttractionRecommendationEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormAttractionRecommendationList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionRecommendationList.Designer.cs">
+      <DependentUpon>FormAttractionRecommendationList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormAttractionTagEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionTagEditor.Designer.cs">
+      <DependentUpon>FormAttractionTagEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormAttractionTagList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionTagList.Designer.cs">
+      <DependentUpon>FormAttractionTagList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormAttractionTicketEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionTicketEditor.Designer.cs">
+      <DependentUpon>FormAttractionTicketEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormAttractionTicketList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionTicketList.Designer.cs">
+      <DependentUpon>FormAttractionTicketList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormAttractionUserFavoriteEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionUserFavoriteEditor.Designer.cs">
+      <DependentUpon>FormAttractionUserFavoriteEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormAttractionUserFavoriteList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormAttractionUserFavoriteList.Designer.cs">
+      <DependentUpon>FormAttractionUserFavoriteList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmAttractions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmAttractions.Designer.cs">
+      <DependentUpon>FrmAttractions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmEventCategoriesEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmEventCategoriesEditor.Designer.cs">
+      <DependentUpon>FrmEventCategoriesEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmEventCategoriesList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmEventCategoriesList.Designer.cs">
+      <DependentUpon>FrmEventCategoriesList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmEventRegistrationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmEventRegistrationForm.Designer.cs">
+      <DependentUpon>FrmEventRegistrationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmEventRegistrationinformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmEventRegistrationinformation.Designer.cs">
+      <DependentUpon>FrmEventRegistrationinformation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmEventsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmEventsEditor.Designer.cs">
+      <DependentUpon>FrmEventsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmEvents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmEvents.Designer.cs">
+      <DependentUpon>FrmEvents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmEventImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmEventImage.Designer.cs">
+      <DependentUpon>FrmEventImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmLogin.Designer.cs">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmMain.Designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\FrmOrderEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmOrderEditor.Designer.cs">
+      <DependentUpon>FrmOrderEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmOrders.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmOrders.Designer.cs">
+      <DependentUpon>FrmOrders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmPostCategoryEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmPostCategoryEditor.Designer.cs">
+      <DependentUpon>FrmPostCategoryEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmPlaceOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmPlaceOrder.Designer.cs">
+      <DependentUpon>FrmPlaceOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmPostDelete.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmPostDelete.Designer.cs">
+      <DependentUpon>FrmPostDelete.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmPostEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmPostEditor.Designer.cs">
+      <DependentUpon>FrmPostEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmPosts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmPosts.Designer.cs">
+      <DependentUpon>FrmPosts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmProductEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmProductEditor.Designer.cs">
+      <DependentUpon>FrmProductEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmProductImageManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmProductImageManagement.Designer.cs">
+      <DependentUpon>FrmProductImageManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmProducts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmProducts.Designer.cs">
+      <DependentUpon>FrmProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmEventsList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmEventsList.Designer.cs">
+      <DependentUpon>FrmEventsList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FrmUserPosts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FrmUserPosts.Designer.cs">
+      <DependentUpon>FrmUserPosts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PostBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\PostBox.Designer.cs">
+      <DependentUpon>PostBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\User\CUser.cs" />
+    <Compile Include="Views\User\FrmUserEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\User\FrmUserEditor.Designer.cs">
+      <DependentUpon>FrmUserEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\User\FrmUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\User\FrmUser.Designer.cs">
+      <DependentUpon>FrmUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\LoginBox.Designer.cs">
+      <DependentUpon>LoginBox.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Views\EventImageBox.resx">
+      <DependentUpon>EventImageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\CustomImageBox.resx">
+      <DependentUpon>CustomImageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\fieldBox.resx">
+      <DependentUpon>fieldBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionCategoryEditor.resx">
+      <DependentUpon>FormAttractionCategoryEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionCommentEditor.resx">
+      <DependentUpon>FormAttractionCommentEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionEditor.resx">
+      <DependentUpon>FormAttractionEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionImageEditor.resx">
+      <DependentUpon>FormAttractionImageEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionList.resx">
+      <DependentUpon>FormAttractionList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionMain.resx">
+      <DependentUpon>FormAttractionMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionCategoryList.resx">
+      <DependentUpon>FormAttractionCategoryList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionCommentList.resx">
+      <DependentUpon>FormAttractionCommentList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionImageList.resx">
+      <DependentUpon>FormAttractionImageList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionRecommendationEditor.resx">
+      <DependentUpon>FormAttractionRecommendationEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionRecommendationList.resx">
+      <DependentUpon>FormAttractionRecommendationList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionTagEditor.resx">
+      <DependentUpon>FormAttractionTagEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionTagList.resx">
+      <DependentUpon>FormAttractionTagList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionTicketEditor.resx">
+      <DependentUpon>FormAttractionTicketEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionTicketList.resx">
+      <DependentUpon>FormAttractionTicketList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionUserFavoriteEditor.resx">
+      <DependentUpon>FormAttractionUserFavoriteEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormAttractionUserFavoriteList.resx">
+      <DependentUpon>FormAttractionUserFavoriteList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmAttractions.resx">
+      <DependentUpon>FrmAttractions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmEventCategoriesEditor.resx">
+      <DependentUpon>FrmEventCategoriesEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmEventCategoriesList.resx">
+      <DependentUpon>FrmEventCategoriesList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmEventRegistrationForm.resx">
+      <DependentUpon>FrmEventRegistrationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmEventRegistrationinformation.resx">
+      <DependentUpon>FrmEventRegistrationinformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmEventsEditor.resx">
+      <DependentUpon>FrmEventsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmEvents.resx">
+      <DependentUpon>FrmEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmEventImage.resx">
+      <DependentUpon>FrmEventImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmLogin.resx">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Views\FrmOrderEditor.resx">
+      <DependentUpon>FrmOrderEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmOrders.resx">
+      <DependentUpon>FrmOrders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmPostCategoryEditor.resx">
+      <DependentUpon>FrmPostCategoryEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmPlaceOrder.resx">
+      <DependentUpon>FrmPlaceOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmPostDelete.resx">
+      <DependentUpon>FrmPostDelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmPostEditor.resx">
+      <DependentUpon>FrmPostEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmPosts.resx">
+      <DependentUpon>FrmPosts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmProductEditor.resx">
+      <DependentUpon>FrmProductEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmProductImageManagement.resx">
+      <DependentUpon>FrmProductImageManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmProducts.resx">
+      <DependentUpon>FrmProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmEventsList.resx">
+      <DependentUpon>FrmEventsList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FrmUserPosts.resx">
+      <DependentUpon>FrmUserPosts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\PostBox.resx">
+      <DependentUpon>PostBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\User\FrmUserEditor.resx">
+      <DependentUpon>FrmUserEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\User\FrmUser.resx">
+      <DependentUpon>FrmUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\LoginBox.resx">
+      <DependentUpon>LoginBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
