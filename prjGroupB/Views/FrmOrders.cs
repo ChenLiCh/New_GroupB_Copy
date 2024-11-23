@@ -16,6 +16,8 @@ namespace prjGroupB.Views
 {
     public partial class FrmOrders : Form
     {
+        public string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
+
         public FrmOrders()
         {
             InitializeComponent();
@@ -47,8 +49,9 @@ namespace prjGroupB.Views
         public DataTable loadOrderStatus() // 讀取資料表的選項並返回 DataTable
         {
             DataTable dt = new DataTable();
-
-            SqlConnection con = new SqlConnection(@"Data Source=.;Database = dbGroupB; Integrated Security = SSPI");
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            SqlConnection con = new SqlConnection(connectString);
+            //SqlConnection con = new SqlConnection(@"Data Source=.;Database = dbGroupB; Integrated Security = SSPI");
             string sql = "SELECT * FROM tOrderStatus";
             using (SqlCommand cmd = new SqlCommand(sql, con))
             {
@@ -70,7 +73,9 @@ namespace prjGroupB.Views
         private List<COrder> GetOrders(string keyword, int fOrderStatusId = -1)
         {
             List<COrder> orderList = new List<COrder>();
-            SqlConnection con = new SqlConnection(@"Data Source=.;Database = dbGroupB; Integrated Security = SSPI");
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            SqlConnection con = new SqlConnection(connectString);
+            //SqlConnection con = new SqlConnection(@"Data Source=.;Database = dbGroupB; Integrated Security = SSPI");
 
             // 動態構建 SQL 查詢語句
 

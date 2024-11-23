@@ -11,7 +11,9 @@ namespace prjGroupB.Models
 {
     public class CPostManager
     {
-        private string _connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True";
+        public string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
+        
+        //private string _connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True";
         private List<string> _Categories;
         public List<string> Categories
         {
@@ -26,6 +28,7 @@ namespace prjGroupB.Models
         public void insert(CPost post)
         {
             SqlConnection con = new SqlConnection();
+            string _connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
             con.ConnectionString = _connectionString;
             con.Open();
             SqlCommand cmd = new SqlCommand();
@@ -153,6 +156,7 @@ namespace prjGroupB.Models
         {
             string sql = "SELECT fTagId FROM tPostAndTag WHERE fPostId = @K_FPOSTID";
             SqlConnection con = new SqlConnection();
+            string _connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
             con.ConnectionString = _connectionString;
             con.Open();
             SqlCommand cmd = new SqlCommand();
@@ -211,6 +215,7 @@ namespace prjGroupB.Models
             sql += "fIsPublic = @K_FISPUBLIC ";
             sql += "WHERE fPostId = @K_FPOSTID";
             SqlConnection con = new SqlConnection();
+            string _connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
             con.ConnectionString = _connectionString;
             con.Open();
             SqlCommand cmd = new SqlCommand();
@@ -344,6 +349,7 @@ namespace prjGroupB.Models
             sql += "WHERE p.fUserId = @K_FUSERID ";
             sql += "ORDER BY fPostId";
             SqlConnection con = new SqlConnection();
+            string _connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
             con.ConnectionString = _connectionString;
             con.Open();
             SqlCommand cmd = new SqlCommand();
@@ -397,6 +403,7 @@ namespace prjGroupB.Models
             sql += "@K_FNAME)";
 
             SqlConnection con = new SqlConnection();
+            string _connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
             con.ConnectionString = _connectionString;
             con.Open();
             SqlCommand cmd = new SqlCommand();
@@ -411,6 +418,7 @@ namespace prjGroupB.Models
         {
             string sql = "SELECT fCategoryId FROM tPostCategories WHERE fUserId = @K_FUSERID AND fName = @K_FNAME";
             SqlConnection con = new SqlConnection();
+            string _connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
             con.ConnectionString = _connectionString;
             con.Open();
             SqlCommand cmd = new SqlCommand();
@@ -454,6 +462,7 @@ namespace prjGroupB.Models
         {
             string sql = "UPDATE tPostCategories SET fName = @K_NEWNAME WHERE fUserId = @K_FUSERID AND fName = @K_FNAME";
             SqlConnection con = new SqlConnection();
+            string _connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
             con.ConnectionString = _connectionString;
             con.Open();
             SqlCommand cmd = new SqlCommand();
@@ -469,6 +478,7 @@ namespace prjGroupB.Models
         {
             string sql = "SELECT * FROM tPostCategories WHERE fUserId = @K_FUSERID";
             SqlConnection con = new SqlConnection();
+            string _connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
             con.ConnectionString = _connectionString;
             con.Open();
             SqlCommand cmd = new SqlCommand();

@@ -19,10 +19,9 @@ namespace Attractions.Views
 {
     public partial class FormAttractionImageEditor : Form
     {
-        //private string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
+        private string pipe = "np:\\\\.\\pipe\\LOCALDB#570BB2F1\\tsql\\query;";
 
         // 圖片
-        
         private CAttractionImage _attractionImage;
         public DialogResult isOk { get; set; }
         public FormAttractionImageEditor()
@@ -117,8 +116,8 @@ namespace Attractions.Views
         {
             if (this._attractionImage.fImage != null) this._attractionImage.fImage.Clear();
             // 連線
-            //string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
-            string connectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            //string connectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             // SQL 查詢語句
             string query = "SELECT fImage FROM tAttractionImages WHERE fAttractionImageId = @id";

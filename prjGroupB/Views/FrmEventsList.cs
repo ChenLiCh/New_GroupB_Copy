@@ -15,6 +15,8 @@ namespace prjGroupB.Views
 {
     public partial class FrmEventsList : Form
     {
+        public string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
+
         private SqlDataAdapter _da;
         private DataSet _ds = null;
         private DataTable _eventTable;
@@ -86,7 +88,9 @@ namespace prjGroupB.Views
         private void LoadCategoriesIntoComboBox()
         {
             string query = "SELECT fEventCategoryId, fEventCategoryName FROM tEventCategories";
-            using (var conn = new SqlConnection(@"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;"))
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            //string connectString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;"
+            using (var conn = new SqlConnection(connectString))
             {
                 conn.Open();
                 using (var cmd = new SqlCommand(query, conn))
@@ -113,7 +117,8 @@ namespace prjGroupB.Views
 
         private void LoadEvents()
         {
-            string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+            string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            //string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
             string query = "SELECT * FROM tEvents";
 
             using (var conn = new SqlConnection(connectionString))
@@ -258,7 +263,9 @@ namespace prjGroupB.Views
         JOIN tEventCategoryMapping m ON e.fEventId = m.fEventId
         WHERE m.fEventCategoryId = @CategoryId";
 
-            using (var conn = new SqlConnection(@"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;"))
+            string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            //string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+            using (var conn = new SqlConnection(connectionString))
             {
                 conn.Open();
                 using (var cmd = new SqlCommand(query, conn))
@@ -277,7 +284,9 @@ namespace prjGroupB.Views
 
         private void displayEventsBySql(string sql, bool isKeyword)
         {
-            using (SqlConnection con = new SqlConnection(@"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;"))
+            string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            //string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 _da = new SqlDataAdapter(sql, con);
@@ -315,7 +324,8 @@ namespace prjGroupB.Views
                     string deleteImageQuery = "DELETE FROM tEventImage WHERE fEventId = @fEventId"; // 刪除圖片
                     string deleteEventQuery = "DELETE FROM tEvents WHERE fEventId = @fEventId"; // 刪除活動
 
-                    string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+                    string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+                    //string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
 
                     using (SqlConnection conn = new SqlConnection(connectionString))
                     {

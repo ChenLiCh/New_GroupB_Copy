@@ -18,7 +18,7 @@ namespace Attractions.Views
 {
     public partial class FormAttractionImageList : Form
     {
-        //private string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
+        private string pipe = "np:\\\\.\\pipe\\LOCALDB#570BB2F1\\tsql\\query;";
         private int _imageIndex = 0;
         private class CImageData
         {
@@ -53,8 +53,8 @@ namespace Attractions.Views
 
         private void displayAttractionImage(string sql, bool isKeyWord)
         {
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             using (SqlConnection connection = new SqlConnection(connectString))
             {
@@ -88,8 +88,8 @@ namespace Attractions.Views
 
         private void displayAttractionImage(string sql, int id)
         {
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             using (SqlConnection connection = new SqlConnection(connectString))
             {
@@ -148,8 +148,8 @@ namespace Attractions.Views
 
             if (deleteIndexes.Count == 0) return;
 
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             // 刪除的 SQL
             string sql = "DELETE FROM tAttractionImages WHERE fAttractionImageId IN (";
@@ -195,8 +195,8 @@ namespace Attractions.Views
         {
             if (dataGridView1.CurrentCell.RowIndex < 0) return;
 
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             string sql = "SELECT * FROM tAttractionImages WHERE fAttractionImageId=@K_fAttractionImageId";
             // 防止 SQL Injection
@@ -294,8 +294,8 @@ namespace Attractions.Views
             CAttractionImage attractionImage = new CAttractionImage();
             if (attractionImage.fImage != null) attractionImage.fImage.Clear();
             // 連線
-            //string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
-            string connectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            //string connectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             // SQL 查詢語句
             string query = "SELECT fImage FROM tAttractionImages WHERE fAttractionId = @id";
@@ -338,8 +338,8 @@ namespace Attractions.Views
 
             if (dataGridView1.CurrentCell.RowIndex < 0) return;
 
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             string sql = getSqlOfAllImage() + " WHERE i.fAttractionId = @K_fAttractionId";
             // 防止 SQL Injection

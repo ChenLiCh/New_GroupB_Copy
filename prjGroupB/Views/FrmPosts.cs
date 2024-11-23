@@ -14,11 +14,14 @@ namespace prjGroupB.Views
 {
     public partial class FrmPosts : Form
     {
+        public string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
+
         SqlDataAdapter _da;
         SqlCommandBuilder _builder;
         DataSet _ds = null;
         private int _position = -1;
-        private string _connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True";
+        string _connectionString = "";
+        //private string _connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True";
         public FrmPosts()
         {
             InitializeComponent();
@@ -31,6 +34,7 @@ namespace prjGroupB.Views
         {
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             SqlConnection con = new SqlConnection();
+            _connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
             con.ConnectionString = _connectionString;
             con.Open();
             _da = new SqlDataAdapter(sql, con);
@@ -68,6 +72,7 @@ namespace prjGroupB.Views
 
                 string sql = "SELECT * FROM tPostImages WHERE fPostId = " + postId;
                 SqlConnection con = new SqlConnection();
+                _connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
                 con.ConnectionString = _connectionString;
                 con.Open();
                 SqlDataAdapter daPostImages = new SqlDataAdapter(sql, con);
@@ -84,6 +89,7 @@ namespace prjGroupB.Views
 
                 sql = "SELECT * FROM tPostAndTag WHERE fPostId = " + postId;
                 con = new SqlConnection();
+                _connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
                 con.ConnectionString = _connectionString;
                 con.Open();
                 SqlDataAdapter daPostAndTag = new SqlDataAdapter(sql, con);
@@ -101,6 +107,7 @@ namespace prjGroupB.Views
 
                 sql = "SELECT * FROM tPostTags";
                 con = new SqlConnection();
+                _connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
                 con.ConnectionString = _connectionString;
                 con.Open();
                 SqlDataAdapter daPostTags = new SqlDataAdapter(sql, con);

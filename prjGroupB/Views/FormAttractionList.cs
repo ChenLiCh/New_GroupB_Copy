@@ -19,25 +19,21 @@ using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
-namespace Attractions
-{
-    public partial class FormAttractionList : Form
-    {
+namespace Attractions {
+    public partial class FormAttractionList : Form {
         private int _lastfAttractionId = 0;
 
-        //public string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
+        public string pipe = "np:\\\\.\\pipe\\LOCALDB#570BB2F1\\tsql\\query;";
         public SqlDataAdapter _da;
         public SqlCommandBuilder _builder;
         public int _position = -1;
         DataSet _ds = null;
 
-        public FormAttractionList()
-        {
+        public FormAttractionList() {
             InitializeComponent();
         }
 
-        private void FormAttractionList_Load(object sender, EventArgs e)
-        {
+        private void FormAttractionList_Load(object sender, EventArgs e) {
             getfAttractionCategory();
 
             string sql = "";
@@ -62,10 +58,9 @@ namespace Attractions
             displayAttractionsBySql(sql, false);
         }
 
-        private void getfAttractionCategory()
-        {
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+        private void getfAttractionCategory() {
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             string sql = "";
             sql += "SELECT ";
@@ -73,18 +68,14 @@ namespace Attractions
             sql += "fAttractionCategoryName ";
             sql += "FROM tAttractionCategories;";
 
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectString))
-                {
+            try {
+                using (SqlConnection connection = new SqlConnection(connectString)) {
                     SqlCommand command = new SqlCommand(sql, connection);
                     command.Connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
+                    while (reader.Read()) {
 
-                        cbCategoryName.Items.Add(new
-                        {
+                        cbCategoryName.Items.Add(new {
                             fAttractionCategoryId = reader["fAttractionCategoryId"],
                             fAttractionCategoryName = reader["fAttractionCategoryName"].ToString()
                         });
@@ -97,28 +88,25 @@ namespace Attractions
                     cbCategoryName.ValueMember = "fAttractionCategoryId";     // 儲存的值
                 }
             }
-            catch 
-            {
+            catch {
                 MessageBox.Show("ERROR");
             }
         }
 
         // 顯示所有欄位
-        private void displayAttractionsBySql(string sql, bool isKeyword)
-        {
+        private void displayAttractionsBySql(string sql, bool isKeyword) {
 
             // 連線
             SqlConnection con = new SqlConnection();
-            //con.ConnectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;"; ;
-            con.ConnectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            con.ConnectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;"; ;
+            //con.ConnectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             con.Open();
 
             _da = new SqlDataAdapter(sql, con);
 
             // sql injection
-            if (isKeyword)
-            {
+            if (isKeyword) {
                 //_da.SelectCommand.Parameters.Add(new SqlParameter("K_KEYWORD", "%" + (object)toolStripTextBox1.Text + "%"));
             }
 
@@ -135,14 +123,12 @@ namespace Attractions
         }
 
         // 按下"新增景點"按鈕
-        private void tsbInsert_Click(object sender, EventArgs e)
-        {
+        private void tsbInsert_Click(object sender, EventArgs e) {
             FormAttractionEditor f = new FormAttractionEditor();
             _lastfAttractionId = getLastfAttractionId();
 
             f.ShowDialog();
-            if (f.isOk == DialogResult.OK)
-            {
+            if (f.isOk == DialogResult.OK) {
                 DataTable dt = dataGridView1.DataSource as DataTable;
 
                 DataRow row = dt.NewRow();
@@ -172,10 +158,8 @@ namespace Attractions
         }
 
         // 把 CAttrationImage 的照片存到 DataTable
-        private void saveImageFromCAttrationImageToDataTable(FormAttractionEditor f)
-        {
-            try
-            {
+        private void saveImageFromCAttrationImageToDataTable(FormAttractionEditor f) {
+            try {
                 _da.Update(dataGridView1.DataSource as DataTable);
                 // 新建一個 image 的 table
                 DataTable imagetable = new DataTable();
@@ -197,8 +181,8 @@ namespace Attractions
 
                 // 連線
                 SqlConnection con = new SqlConnection();
-                // con.ConnectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;"; ;
-                con.ConnectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+                con.ConnectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;"; ;
+                //con.ConnectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
                 con.Open();
 
@@ -219,15 +203,13 @@ namespace Attractions
 
                 con.Close();
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
 
             }
         }
 
         // 從 dataGridView1 取得最後一個 AttractionId
-        private int getLastfAttractionId()
-        {
+        private int getLastfAttractionId() {
             // dataGridView1 沒資料直接回傳
             if (dataGridView1.Rows.Count <= 0) return 0;
 
@@ -238,28 +220,23 @@ namespace Attractions
             DataGridViewRow lastRow = new DataGridViewRow();
             if (lastIndex < 0) lastIndex = 0;
             else { lastRow = dataGridView1.Rows[lastIndex]; }
-            
-            try
-            {
+
+            try {
                 return (int)lastRow.Cells[0].Value;
             }
             catch { return 0; }
         }
 
         // 按下"刪除景點"按鈕
-        private void tsbDelete_Click(object sender, EventArgs e)
-        {
+        private void tsbDelete_Click(object sender, EventArgs e) {
             List<int> deleteIndexes = new List<int>();
 
             // 取得所有選取到的 row
-            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
-            {
-                try
-                {
+            foreach (DataGridViewRow row in dataGridView1.SelectedRows) {
+                try {
                     deleteIndexes.Add((int)row.Cells["fAttractionId"].Value);
                 }
-                catch 
-                {
+                catch {
 
                 }
             }
@@ -281,260 +258,210 @@ namespace Attractions
             // 刪掉 attraction 之前，要把相關的 favorites 刪掉
             deleteRelatedFavorite(deleteIndexes);
 
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             // 刪除的 SQL
             string sql = "DELETE FROM tAttractions WHERE fAttractionId IN (";
-            for (int i = 0; i < deleteIndexes.Count; i++)
-            {
+            for (int i = 0; i < deleteIndexes.Count; i++) {
                 sql += $"@id{i},";
             }
             sql = sql.TrimEnd(',') + ")";
 
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectString))
-                {
+            try {
+                using (SqlConnection connection = new SqlConnection(connectString)) {
                     connection.Open();
 
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
+                    using (SqlCommand command = new SqlCommand(sql, connection)) {
                         // 動態添加參數
-                        for (int i = 0; i < deleteIndexes.Count; i++)
-                        {
+                        for (int i = 0; i < deleteIndexes.Count; i++) {
                             command.Parameters.AddWithValue($"@id{i}", deleteIndexes[i]);
                         }
                         command.ExecuteNonQuery();
                     }
                 }
             }
-            catch 
-            {
+            catch {
             }
 
             displayAttractionsBySql("SELECT * FROM tAttractions;", false);
         }
 
         // 刪掉相關的 favorite
-        private void deleteRelatedFavorite(List<int> deleteIndexes)
-        {
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+        private void deleteRelatedFavorite(List<int> deleteIndexes) {
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             string sql = "DELETE FROM tAttractionUserFavorites WHERE fAttractionId IN (";
-            for (int i = 0; i < deleteIndexes.Count; i++)
-            {
+            for (int i = 0; i < deleteIndexes.Count; i++) {
                 sql += $"@id{i},";
             }
             sql = sql.TrimEnd(',') + ");";
 
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectString))
-                {
+            try {
+                using (SqlConnection connection = new SqlConnection(connectString)) {
                     connection.Open();
 
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
+                    using (SqlCommand command = new SqlCommand(sql, connection)) {
                         // 動態添加參數
-                        for (int i = 0; i < deleteIndexes.Count; i++)
-                        {
+                        for (int i = 0; i < deleteIndexes.Count; i++) {
                             command.Parameters.AddWithValue($"@id{i}", deleteIndexes[i]);
                         }
                         command.ExecuteNonQuery();
                     }
                 }
             }
-            catch 
-            {
+            catch {
             }
         }
 
         // 刪掉相關的 comment
-        private void deleteRelatedComment(List<int> deleteIndexes)
-        {
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+        private void deleteRelatedComment(List<int> deleteIndexes) {
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             string sql = "DELETE FROM tAttractionComments WHERE fAttractionId IN (";
-            for (int i = 0; i < deleteIndexes.Count; i++)
-            {
+            for (int i = 0; i < deleteIndexes.Count; i++) {
                 sql += $"@id{i},";
             }
             sql = sql.TrimEnd(',') + ");";
 
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectString))
-                {
+            try {
+                using (SqlConnection connection = new SqlConnection(connectString)) {
                     connection.Open();
 
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
+                    using (SqlCommand command = new SqlCommand(sql, connection)) {
                         // 動態添加參數
-                        for (int i = 0; i < deleteIndexes.Count; i++)
-                        {
+                        for (int i = 0; i < deleteIndexes.Count; i++) {
                             command.Parameters.AddWithValue($"@id{i}", deleteIndexes[i]);
                         }
                         command.ExecuteNonQuery();
                     }
                 }
             }
-            catch 
-            {
+            catch {
             }
         }
 
         // 刪掉相關的 ticket
-        private void deleteRelatedTicket(List<int> deleteIndexes)
-        {
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+        private void deleteRelatedTicket(List<int> deleteIndexes) {
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             string sql = "DELETE FROM tAttractionTickets WHERE fAttractionId IN (";
-            for (int i = 0; i < deleteIndexes.Count; i++)
-            {
+            for (int i = 0; i < deleteIndexes.Count; i++) {
                 sql += $"@id{i},";
             }
             sql = sql.TrimEnd(',') + ");";
 
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectString))
-                {
+            try {
+                using (SqlConnection connection = new SqlConnection(connectString)) {
                     connection.Open();
 
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
+                    using (SqlCommand command = new SqlCommand(sql, connection)) {
                         // 動態添加參數
-                        for (int i = 0; i < deleteIndexes.Count; i++)
-                        {
+                        for (int i = 0; i < deleteIndexes.Count; i++) {
                             command.Parameters.AddWithValue($"@id{i}", deleteIndexes[i]);
                         }
                         command.ExecuteNonQuery();
                     }
                 }
             }
-            catch 
-            {
+            catch {
             }
         }
 
         // 刪掉相關的 recommendation
-        private void deleteRelatedRecommendation(List<int> deleteIndexes)
-        {
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+        private void deleteRelatedRecommendation(List<int> deleteIndexes) {
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             string sql = "DELETE FROM tAttractionRecommendations WHERE fAttractionId IN (";
-            for (int i = 0; i < deleteIndexes.Count; i++)
-            {
+            for (int i = 0; i < deleteIndexes.Count; i++) {
                 sql += $"@id{i},";
             }
             sql = sql.TrimEnd(',') + ");";
 
             string sql2 = "DELETE FROM tAttractionRecommendations WHERE fRecommendationId IN (";
-            for (int i = 0; i < deleteIndexes.Count; i++)
-            {
+            for (int i = 0; i < deleteIndexes.Count; i++) {
                 sql2 += $"@id{i},";
             }
             sql2 = sql2.TrimEnd(',') + ");";
 
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectString))
-                {
+            try {
+                using (SqlConnection connection = new SqlConnection(connectString)) {
                     connection.Open();
 
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
+                    using (SqlCommand command = new SqlCommand(sql, connection)) {
                         // 動態添加參數
-                        for (int i = 0; i < deleteIndexes.Count; i++)
-                        {
+                        for (int i = 0; i < deleteIndexes.Count; i++) {
                             command.Parameters.AddWithValue($"@id{i}", deleteIndexes[i]);
                         }
                         command.ExecuteNonQuery();
                     }
                 }
             }
-            catch 
-            {
+            catch {
             }
 
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectString))
-                {
+            try {
+                using (SqlConnection connection = new SqlConnection(connectString)) {
                     connection.Open();
 
-                    using (SqlCommand command = new SqlCommand(sql2, connection))
-                    {
+                    using (SqlCommand command = new SqlCommand(sql2, connection)) {
                         // 動態添加參數
-                        for (int i = 0; i < deleteIndexes.Count; i++)
-                        {
+                        for (int i = 0; i < deleteIndexes.Count; i++) {
                             command.Parameters.AddWithValue($"@id{i}", deleteIndexes[i]);
                         }
                         command.ExecuteNonQuery();
                     }
                 }
             }
-            catch 
-            {
+            catch {
             }
         }
 
         // 刪除相關景點的圖片
-        private void deleteRelatedAttractionsImage(List<int> indexes)
-        {
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+        private void deleteRelatedAttractionsImage(List<int> indexes) {
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             string sql = "DELETE FROM tAttractionImages WHERE fAttractionId IN (";
-            for (int i = 0; i < indexes.Count; i++)
-            {
+            for (int i = 0; i < indexes.Count; i++) {
                 sql += $"@id{i},";
             }
             sql = sql.TrimEnd(',') + ")";
 
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectString))
-                {
+            try {
+                using (SqlConnection connection = new SqlConnection(connectString)) {
                     connection.Open();
 
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
+                    using (SqlCommand command = new SqlCommand(sql, connection)) {
                         // 動態添加參數
-                        for (int i = 0; i < indexes.Count; i++)
-                        {
+                        for (int i = 0; i < indexes.Count; i++) {
                             command.Parameters.AddWithValue($"@id{i}", indexes[i]);
                         }
                         command.ExecuteNonQuery();
                     }
                 }
             }
-            catch 
-            {
+            catch {
                 //MessageBox.Show("ERROR: Can't Set Related Attractions CategeryId Is Null");
             }
         }
 
         // 按下"修改景點"按鈕
-        private void tsbEdit_Click(object sender, EventArgs e)
-        {
+        private void tsbEdit_Click(object sender, EventArgs e) {
             showEditView();
         }
 
         // 表單關閉後，把資料存進 Database
-        private void FormAttractionList_FormClosed(object sender, FormClosedEventArgs e)
-        {
+        private void FormAttractionList_FormClosed(object sender, FormClosedEventArgs e) {
             _da.Update(dataGridView1.DataSource as DataTable);
         }
 
         // 按下"重新整理"按鈕
-        private void tsbReload_Click(object sender, EventArgs e)
-        {
+        private void tsbReload_Click(object sender, EventArgs e) {
             _da.Update(dataGridView1.DataSource as DataTable);
             //_da.Update(imagetable)
             string sql = "";
@@ -560,16 +487,14 @@ namespace Attractions
         }
 
         // 點擊 GridView，取得滑鼠點到的 row 位置
-        private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
-        {
+        private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e) {
             _position = e.RowIndex; // 在 GridView 中點到的位置
         }
 
         //
-        private void tsbSearch_Click(object sender, EventArgs e)
-        {
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+        private void tsbSearch_Click(object sender, EventArgs e) {
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             string sql = "SELECT ";
             sql += "fAttractionId, ";
@@ -603,10 +528,8 @@ namespace Attractions
             if (cbCategoryName.Text != "") sql += "OR fAttractionCategoryName LIKE @fAttractionCategoryName ";
             if (cbStatus.Text != "") sql += "OR fStatus = @fStatus ";
 
-            if (cbBeforeAndAfterOpeningTime.SelectedItem != null)
-            {
-                switch (cbBeforeAndAfterOpeningTime.SelectedItem.ToString())
-                {
+            if (cbBeforeAndAfterOpeningTime.SelectedItem != null) {
+                switch (cbBeforeAndAfterOpeningTime.SelectedItem.ToString()) {
                     case "前":
                         sql += "OR fOpeningTime < @fOpeningTime ";
                         break;
@@ -618,10 +541,8 @@ namespace Attractions
                 }
             }
 
-            if (cbBeforeAndAfterClosingTime.SelectedItem != null)
-            {
-                switch (cbBeforeAndAfterClosingTime.SelectedItem.ToString())
-                {
+            if (cbBeforeAndAfterClosingTime.SelectedItem != null) {
+                switch (cbBeforeAndAfterClosingTime.SelectedItem.ToString()) {
                     case "前":
                         sql += "OR fClosingTime < @fClosingTime ";
                         break;
@@ -651,10 +572,8 @@ namespace Attractions
             SqlParameter fOpeningTime = new SqlParameter("fOpeningTime", dtpOpeningTime.Text);
             SqlParameter fClosingTime = new SqlParameter("fClosingTime", dtpClosingTime.Text);
 
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectString))
-                {
+            try {
+                using (SqlConnection connection = new SqlConnection(connectString)) {
                     SqlCommand command = new SqlCommand(sql, connection);
                     command.Parameters.Add(number);
                     command.Parameters.Add(fAttractionName);
@@ -676,22 +595,19 @@ namespace Attractions
                     dataGridView1.DataSource = dataTable;
                 }
             }
-            catch
-            {
+            catch {
                 MessageBox.Show("ERROR");
             }
             resetGridStyle();
         }
 
         // 雙擊 dataGridView1 欄位，開啟編輯頁面
-        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
             showEditView();
         }
 
         // 顯示編輯頁面
-        private void showEditView()
-        {
+        private void showEditView() {
             if (_position < 0) return;
 
             // 選取指定的 row
@@ -701,12 +617,10 @@ namespace Attractions
             CAttraction x = new CAttraction();
 
             // FormAttractionList 的 DataGridView 的資料傳到 CAttraction 物件 x 上
-            try
-            {
+            try {
                 x.fAttractionId = (int)row["fAttractionId"];
             }
-            catch
-            {
+            catch {
                 x.fAttractionId = 0;
             }
             x.fAttractionName = (string)row["fAttractionName"];
@@ -718,12 +632,10 @@ namespace Attractions
             x.fLongitude = (string)row["fLongitude"];
             x.fLatitude = (string)row["fLatitude"];
             x.fRegion = (string)row["fRegion"];
-            try
-            {
+            try {
                 x.fCategoryId = (int)row["fCategoryId"];
             }
-            catch
-            {
+            catch {
 
             }
             x.fCreatedDate = (DateTime)row["fCreatedDate"];
@@ -733,12 +645,10 @@ namespace Attractions
 
             // 把剛剛傳到 CAttraction 物件 x 上的資料，再傳到 FormAttractionEditor
             f.attraction = x;
-            try
-            {
+            try {
                 f.showSavedImage((int)row["fAttractionId"], 0);
             }
-            catch
-            {
+            catch {
                 MessageBox.Show("請先更新剛才修改的資料");
                 return;
             }
@@ -746,8 +656,7 @@ namespace Attractions
             f.ShowDialog();
 
             // 點擊"確定"按鈕後，把資料寫到 DataRow
-            if (f.isOk == DialogResult.OK)
-            {
+            if (f.isOk == DialogResult.OK) {
                 row["fAttractionName"] = f.attraction.fAttractionName;
                 row["fDescription"] = f.attraction.fDescription;
                 row["fAddress"] = f.attraction.fAddress;
@@ -767,8 +676,7 @@ namespace Attractions
             }
         }
 
-        private void tsbReset_Click(object sender, EventArgs e)
-        {
+        private void tsbReset_Click(object sender, EventArgs e) {
             tstbAttractionName.Text = "";
             tstbDescription.Text = "";
             tstbAddress.Text = "";
@@ -783,8 +691,7 @@ namespace Attractions
             cbBeforeAndAfterClosingTime.SelectedItem = null;
         }
 
-        private void resetGridStyle()
-        {
+        private void resetGridStyle() {
             dataGridView1.Columns["fAttractionId"].HeaderText = "景點ID";
             dataGridView1.Columns["fAttractionId"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView1.Columns["fAttractionName"].HeaderText = "景點名稱";
@@ -817,8 +724,7 @@ namespace Attractions
             dataGridView1.Columns["fStatus"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView1.Columns["fTransformInformation"].HeaderText = "交通資訊";
             dataGridView1.Columns["fTransformInformation"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            if (dataGridView1.Columns["fAttractionCategoryName"] != null)
-            {
+            if (dataGridView1.Columns["fAttractionCategoryName"] != null) {
                 dataGridView1.Columns["fAttractionCategoryName"].HeaderText = "分類名稱";
                 dataGridView1.Columns["fAttractionCategoryName"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
@@ -834,34 +740,30 @@ namespace Attractions
             dataGridView1.EnableHeadersVisualStyles = false;
 
             // 設定 dataGridVIew 標頭樣式
-            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Gainsboro; 
-            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black; 
+            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.Gainsboro;
+            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
             dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("微軟正黑體", 14, FontStyle.Bold);
             dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             bool isColorChanged = false;
-            foreach (DataGridViewRow r in dataGridView1.Rows)
-            {
+            foreach (DataGridViewRow r in dataGridView1.Rows) {
                 isColorChanged = !isColorChanged;
 
                 r.DefaultCellStyle.Font = new Font("微軟正黑體", 12);
                 r.DefaultCellStyle.BackColor = Color.White;
                 r.DefaultCellStyle.SelectionBackColor = Color.MediumSeaGreen;
 
-                if (isColorChanged)
-                {
+                if (isColorChanged) {
                     r.DefaultCellStyle.BackColor = Color.MediumAquamarine;
                 }
             }
         }
 
-        private void FormAttractionList_Paint(object sender, PaintEventArgs e)
-        {
+        private void FormAttractionList_Paint(object sender, PaintEventArgs e) {
             resetGridStyle();
         }
 
-        private void dataGridView1_Sorted(object sender, EventArgs e)
-        {
+        private void dataGridView1_Sorted(object sender, EventArgs e) {
             resetGridStyle();
         }
     }

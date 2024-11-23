@@ -15,6 +15,8 @@ namespace prjGroupB.Views
 {
     public partial class FrmEventImage : Form
     {
+        public string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
+
         private CEventImage _selected;
 
         public FrmEventImage()
@@ -46,9 +48,10 @@ namespace prjGroupB.Views
         e.fEventLocation LIKE @K_KEYWORD OR
         e.fEventName LIKE @K_KEYWORD";
 
-            try
-            {
-                using (SqlConnection con = new SqlConnection(@"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;"))
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+
+            try {
+                using (SqlConnection con = new SqlConnection(connectString))
                 {
                     con.Open();
 
@@ -117,9 +120,10 @@ namespace prjGroupB.Views
                 return;
             }
 
-            try
-            {
-                using (SqlConnection con = new SqlConnection(@"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;"))
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+
+            try {
+                using (SqlConnection con = new SqlConnection(connectString))
                 {
                     con.Open();
                     SqlCommand cmd = new SqlCommand("DELETE FROM tEventImage WHERE fEventImageId = @fEventImageId", con);

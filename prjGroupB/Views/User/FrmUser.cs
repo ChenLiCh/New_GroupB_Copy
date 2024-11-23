@@ -14,6 +14,7 @@ namespace prjGroupB.Views
 {
     public partial class FrmUser : Form
     {
+        public string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
         SqlDataAdapter _da;
         SqlCommandBuilder _builder;
 
@@ -33,7 +34,9 @@ namespace prjGroupB.Views
         {
             //連到tUser資料夾
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //con.ConnectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+            con.ConnectionString = connectString;
             con.Open();
 
             _da = new SqlDataAdapter(sql, con);

@@ -17,6 +17,7 @@ namespace prjGroupB.Views
 {
     public partial class FrmProductEditor : Form
     {
+        public string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
         public DialogResult isOK { get; internal set; }
         private CProduct _product;
         public CProduct product
@@ -110,8 +111,8 @@ namespace prjGroupB.Views
         public DataTable loadProductCategories() // 讀取資料表的選項並返回 DataTable
         {
             DataTable dt = new DataTable();
-
-            using (SqlConnection con = new SqlConnection(@"Data Source=.;Database = dbGroupB; Integrated Security = SSPI"))
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            using (SqlConnection con = new SqlConnection(connectString))
             {
                 string sql = "SELECT * FROM tProductCategories";
                 using (SqlCommand cmd = new SqlCommand(sql, con))

@@ -13,7 +13,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Attractions.Views {
     public partial class FormAttractionCategoryList : Form {
-        //private string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
+        private string pipe = "np:\\\\.\\pipe\\LOCALDB#570BB2F1\\tsql\\query;";
         public FormAttractionCategoryList() {
             InitializeComponent();
         }
@@ -24,8 +24,8 @@ namespace Attractions.Views {
         }
 
         private void displayAttractionCategory(string sql, bool isKeyWord) {
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+           //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
             using (SqlConnection connection = new SqlConnection(connectString)) {
                 SqlCommand command = new SqlCommand(sql, connection);
 
@@ -81,8 +81,8 @@ namespace Attractions.Views {
             // 刪掉 category 之前，要把相關的 tAttractions 的 fCategoryId 改成 NULL 
             setRelatedAttractionsCategeryIdIsNull(deleteIndexes);
 
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             // 刪除的 SQL
             string sql = "DELETE FROM tAttractionCategories WHERE fAttractionCategoryId IN (";
@@ -112,8 +112,8 @@ namespace Attractions.Views {
 
         // 設定相關 attraction 的 categoryId 為 null
         private void setRelatedAttractionsCategeryIdIsNull(List<int> indexes) {
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             string sql = "UPDATE tAttractions SET fCategoryId = NULL WHERE fCategoryId IN (";
             for (int i = 0; i < indexes.Count; i++) {
@@ -148,8 +148,8 @@ namespace Attractions.Views {
         private void showEditView() {
             if (dataGridView1.CurrentCell.RowIndex < 0) return;
 
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             string sql = "SELECT * FROM tAttractionCategories WHERE fAttractionCategoryId=@K_fAttractionCategoryId";
             // 防止 SQL Injection

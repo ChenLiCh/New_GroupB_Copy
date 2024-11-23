@@ -14,7 +14,7 @@ namespace Attractions.Views
 {
     public partial class FormAttractionTicketList : Form
     {
-        //private string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
+        private string pipe = "np:\\\\.\\pipe\\LOCALDB#570BB2F1\\tsql\\query;";
         public FormAttractionTicketList()
         {
             InitializeComponent();
@@ -44,8 +44,8 @@ namespace Attractions.Views
 
         private void displayAttractionTicket(string sql, bool isKeyWord)
         {
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             using (SqlConnection connection = new SqlConnection(connectString))
             {
@@ -107,8 +107,8 @@ namespace Attractions.Views
 
             if (deleteIndexes.Count == 0) return;
 
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             // 刪除的 SQL
             string sql = "DELETE FROM tAttractionTickets WHERE fAttractionTicketId IN (";
@@ -151,8 +151,8 @@ namespace Attractions.Views
         {
             if (dataGridView1.CurrentCell.RowIndex < 0) return;
 
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             string sql = "SELECT * FROM tAttractionTickets WHERE fAttractionTicketId=@K_fAttractionTicketId";
             // 防止 SQL Injection

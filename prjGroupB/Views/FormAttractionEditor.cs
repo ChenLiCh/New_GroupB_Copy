@@ -19,7 +19,7 @@ namespace Attractions.Views
 {
     public partial class FormAttractionEditor : Form
     {
-        //private string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
+        private string pipe = "np:\\\\.\\pipe\\LOCALDB#570BB2F1\\tsql\\query;";
         private CAttraction _attraction;
 
         // 圖片
@@ -196,8 +196,8 @@ namespace Attractions.Views
             sql += "FROM tAttractionCategories;";
 
             SqlConnection con = new SqlConnection();
-            //con.ConnectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
-            con.ConnectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            con.ConnectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            //con.ConnectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             con.Open();
 
@@ -230,8 +230,8 @@ namespace Attractions.Views
             sql += "WHERE fAttractionCategoryId = @Id;";
 
             SqlConnection con = new SqlConnection();
-            //con.ConnectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;"; ;
-            con.ConnectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            con.ConnectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;"; ;
+            //con.ConnectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
             con.Open();
 
             SqlDataAdapter da = new SqlDataAdapter(sql, con);
@@ -288,8 +288,8 @@ namespace Attractions.Views
         {
             if (this._attractionImage.fImage != null) this._attractionImage.fImage.Clear();
             // 連線
-            // string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
-            string connectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            //string connectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             // SQL 查詢語句
             string query = "SELECT fImage FROM tAttractionImages WHERE fAttractionId = @id";

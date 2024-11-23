@@ -15,7 +15,7 @@ namespace prjGroupB.Views
 {
     public partial class FormAttractionUserFavoriteList : Form
     {
-        //private string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
+        private string pipe = "np:\\\\.\\pipe\\LOCALDB#570BB2F1\\tsql\\query;";
         public FormAttractionUserFavoriteList()
         {
             InitializeComponent();
@@ -44,8 +44,8 @@ namespace prjGroupB.Views
 
         private void displayAttractionUserFavorite(string sql, bool isKeyWord)
         {
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             using (SqlConnection connection = new SqlConnection(connectString))
             {
@@ -107,8 +107,8 @@ namespace prjGroupB.Views
 
             if (deleteIndexes.Count == 0) return;
 
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             // 刪除的 SQL
             string sql = "DELETE FROM tAttractionUserFavorites WHERE fFavoriteId IN (";
@@ -151,8 +151,8 @@ namespace prjGroupB.Views
         {
             if (dataGridView1.CurrentCell.RowIndex < 0) return;
 
-            //string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
 
             string sql = "SELECT * FROM tAttractionUserFavorites WHERE fFavoriteId=@K_fFavoriteId";
             // 防止 SQL Injection

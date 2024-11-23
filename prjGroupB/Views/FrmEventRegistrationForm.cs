@@ -15,6 +15,7 @@ namespace prjGroupB.Views
 {
     public partial class FrmEventRegistrationForm : Form
     {
+        public string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
         // private int _currentUserId;
 
         public FrmEventRegistrationForm()
@@ -51,7 +52,8 @@ namespace prjGroupB.Views
 
         private void LoadEventDetails(string partialEventName)
         {
-            string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+            string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
             string query = "SELECT TOP 1 fEventId, fEventStartDate, fEventEndDate, fEventActivityFee FROM tEvents WHERE fEventName LIKE @fEventName";
 
             try
@@ -96,7 +98,8 @@ namespace prjGroupB.Views
         private CUser GetMemberInfo(int userId)
         {
             CUser user = null;
-            string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+            string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
             string query = "SELECT fUserId, fUserName, fUserPhone, fUserEmail FROM tUser WHERE fUserId = @UserId";
 
             try
@@ -144,7 +147,8 @@ namespace prjGroupB.Views
             decimal eventFee = decimal.Parse(txtEventFee.Text);
             string registrationDate = DateTime.Now.ToString("yyyy-MM-dd"); // 當前日期轉為字串
 
-            string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+            string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
             string query = "INSERT INTO tEventRegistrationForm (fEventId,fUserId, fEventRegistrationCount, fEventContact, fEventContactPhone, fEregistrationDate) " +
                            "VALUES (@EventId,@UserId,@Count, @Contact, @Phone, @Date)";
 

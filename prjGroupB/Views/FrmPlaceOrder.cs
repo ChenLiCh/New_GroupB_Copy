@@ -18,6 +18,7 @@ namespace prjGroupB.Views
 {
     public partial class FrmPlaceOrder : Form
     {
+        public string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
         public FrmPlaceOrder()
         {
             InitializeComponent();
@@ -29,8 +30,10 @@ namespace prjGroupB.Views
         private List<CProductDisplay> GetProductDetails()
         {
             List<CProductDisplay> productList = new List<CProductDisplay>();
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            //string connectString = @"Data Source=.;Database = dbGroupB; Integrated Security = SSPI";
 
-            using (SqlConnection con = new SqlConnection(@"Data Source=.;Database = dbGroupB; Integrated Security = SSPI"))
+            using (SqlConnection con = new SqlConnection(connectString))
             {
                 string sql = "SELECT p.fProductId, p.fUserId, c.fCategoryName, p.fProductName, p.fProductDescription, p.fProductPrice,p.fStock, " +
                              "MAX(CASE WHEN pi.RowNum = 1 THEN pi.fImage ELSE NULL END) AS fProductImage1, " +

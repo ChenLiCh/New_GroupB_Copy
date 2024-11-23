@@ -13,60 +13,52 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static prjGroupB.Views.FrmEventsList;
 
-namespace prjGroupB.Views
-{
-    public partial class FrmEventsEditor : Form
-    {
+namespace prjGroupB.Views {
+    public partial class FrmEventsEditor : Form {
+        public string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
+
         private List<EventComboboxItem> _EventCategories = new List<EventComboboxItem>();
         public DialogResult IsOk { get; set; }
         private CEvents _Events;
         private EventComboboxItem _EventCategory = new EventComboboxItem { Id = -1, Text = "請選擇類別" };
         private CEventImage _EventImage;
 
-        public CEvents Event
-        {
-            get
-            {
+        public CEvents Event {
+            get {
                 if (_Events == null)
                     _Events = new CEvents();
 
                 _Events.fEventId = string.IsNullOrEmpty(textBox1.Text) ? 0 : Convert.ToInt32(textBox1.Text);
                 _Events.fEventName = textBox2.Text;
 
-                if (string.IsNullOrWhiteSpace(_Events.fEventName))
-                {
+                if (string.IsNullOrWhiteSpace(_Events.fEventName)) {
                     MessageBox.Show("活動名稱不能為空！", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return null; // 阻止提交
                 }
 
-                if (!DateTime.TryParse(textBox5.Text, out DateTime startDate))
-                {
+                if (!DateTime.TryParse(textBox5.Text, out DateTime startDate)) {
                     MessageBox.Show("請輸入有效的開始日期", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return null; // 阻止提交
                 }
                 _Events.fEventStartDate = startDate.ToString();
 
-                if (!DateTime.TryParse(textBox6.Text, out DateTime endDate))
-                {
+                if (!DateTime.TryParse(textBox6.Text, out DateTime endDate)) {
                     MessageBox.Show("請輸入有效的結束日期", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return null; // 阻止提交
                 }
                 _Events.fEventEndDate = endDate.ToString();
 
-                if (!decimal.TryParse(textBox9.Text, out decimal activityFee))
-                {
+                if (!decimal.TryParse(textBox9.Text, out decimal activityFee)) {
                     MessageBox.Show("活動費用必須為數字", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return null; // 阻止提交
                 }
                 _Events.fEventActivityfee = activityFee;
 
                 // 檢查下拉選單選中值
-                if (cmbEventCategory.SelectedItem is EventComboboxItem selectedCategory && selectedCategory.Id > 0)
-                {
+                if (cmbEventCategory.SelectedItem is EventComboboxItem selectedCategory && selectedCategory.Id > 0) {
                     _EventCategory = selectedCategory; // 更新屬性
                 }
-                else
-                {
+                else {
                     _EventCategory = new EventComboboxItem { Id = -1, Text = "未選擇" }; // 預設值
                     MessageBox.Show("請選擇有效的活動類別！", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
@@ -79,8 +71,7 @@ namespace prjGroupB.Views
 
                 return _Events;
             }
-            set
-            {
+            set {
                 _Events = value;
                 textBox1.Text = _Events.fEventId.ToString();
                 textBox2.Text = _Events.fEventName;
@@ -95,12 +86,9 @@ namespace prjGroupB.Views
 
                 // 設置下拉選單的選中值
 
-                if (_EventCategory != null && _EventCategory.Id > 0)
-                {
-                    foreach (var item in _EventCategories)
-                    {
-                        if (item.Id == _EventCategory.Id)
-                        {
+                if (_EventCategory != null && _EventCategory.Id > 0) {
+                    foreach (var item in _EventCategories) {
+                        if (item.Id == _EventCategory.Id) {
                             cmbEventCategory.SelectedItem = item;
                             break;
                         }
@@ -111,13 +99,11 @@ namespace prjGroupB.Views
             }
         }
 
-        public FrmEventsEditor()
-        {
+        public FrmEventsEditor() {
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
+        private void button1_Click(object sender, EventArgs e) {
             string message = "";
 
             // 驗證必填欄位
@@ -133,8 +119,7 @@ namespace prjGroupB.Views
             if (!decimal.TryParse(textBox9.Text, out decimal fee))
                 message += "\r\n費用必須為數字";
 
-            if (!string.IsNullOrEmpty(message))
-            {
+            if (!string.IsNullOrEmpty(message)) {
                 MessageBox.Show(message, "輸入錯誤", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -143,19 +128,16 @@ namespace prjGroupB.Views
             CEvents eventData = Event;
             CEventImage imageData = Image;
 
-            try
-            {
+            try {
                 // 儲存活動資料
                 SaveEventWithImage(eventData, imageData);
 
                 // 檢查選中的類別
-                if (cmbEventCategory.SelectedItem is EventComboboxItem selectedCategory && selectedCategory.Id > 0)
-                {
+                if (cmbEventCategory.SelectedItem is EventComboboxItem selectedCategory && selectedCategory.Id > 0) {
                     int categoryId = selectedCategory.Id;
                     SaveEventCategoryMapping(eventData.fEventId, categoryId);
                 }
-                else
-                {
+                else {
                     MessageBox.Show("必須選擇類別！", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -164,19 +146,16 @@ namespace prjGroupB.Views
                 this.IsOk = DialogResult.OK;
                 Close();
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show($"儲存時發生錯誤：{ex.Message}", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
+        private void button2_Click(object sender, EventArgs e) {
             Close();
         }
 
-        private void pictureBox1_DoubleClick(object sender, EventArgs e)
-        {
+        private void pictureBox1_DoubleClick(object sender, EventArgs e) {
             openFileDialog1.Filter = "活動照片|*.png;*.jpg";
             if (openFileDialog1.ShowDialog() != DialogResult.OK)
                 return;
@@ -197,45 +176,36 @@ namespace prjGroupB.Views
             //}
         }
 
-        public CEventImage Image
-        {
-            get
-            {
+        public CEventImage Image {
+            get {
                 if (_EventImage == null)
                     _EventImage = new CEventImage();
                 _EventImage.fEventImageId = string.IsNullOrEmpty(textBox11.Text) ? 0 : Convert.ToInt32(textBox11.Text);
                 _EventImage.fEventId = string.IsNullOrEmpty(textBox1.Text) ? 0 : Convert.ToInt32(textBox1.Text);
                 return _EventImage;
             }
-            set
-            {
+            set {
                 _EventImage = value;
                 textBox11.Text = _EventImage.fEventImageId.ToString();
                 textBox1.Text = _EventImage.fEventId.ToString();
-                if (_EventImage.fEventImage != null)
-                {
-                    try
-                    {
-                        using (Stream streamImage = new MemoryStream(_EventImage.fEventImage))
-                        {
+                if (_EventImage.fEventImage != null) {
+                    try {
+                        using (Stream streamImage = new MemoryStream(_EventImage.fEventImage)) {
                             pictureBox1.Image = Bitmap.FromStream(streamImage);
                         }
                     }
-                    catch
-                    {
+                    catch {
                         MessageBox.Show("圖片讀取錯誤");
                     }
                 }
             }
         }
 
-        private void SaveEventWithImage(CEvents eventData, CEventImage imageData)
-        {
-            string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
+        private void SaveEventWithImage(CEvents eventData, CEventImage imageData) {
+            string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            //string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+            try {
+                using (SqlConnection conn = new SqlConnection(connectionString)) {
                     conn.Open();
 
                     int eventId;
@@ -257,8 +227,7 @@ namespace prjGroupB.Views
                     WHERE 
                         fEventId = @fEventId;";
 
-                        using (SqlCommand cmd = new SqlCommand(updateEventQuery, conn))
-                        {
+                        using (SqlCommand cmd = new SqlCommand(updateEventQuery, conn)) {
                             cmd.Parameters.AddWithValue("@fEventId", eventData.fEventId);
                             cmd.Parameters.AddWithValue("@fEventName", eventData.fEventName);
                             cmd.Parameters.AddWithValue("@fEventDescription", eventData.fEventDescription ?? (object)DBNull.Value);
@@ -286,8 +255,7 @@ namespace prjGroupB.Views
                          @fEventLocation, @fEventCreatedDate, @fEventUpdatedDate, @fEventActivityfee, @fEventURL);
                     SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
-                        using (SqlCommand cmd = new SqlCommand(insertEventQuery, conn))
-                        {
+                        using (SqlCommand cmd = new SqlCommand(insertEventQuery, conn)) {
                             cmd.Parameters.AddWithValue("@fEventName", eventData.fEventName);
                             cmd.Parameters.AddWithValue("@fEventDescription", eventData.fEventDescription ?? (object)DBNull.Value);
                             cmd.Parameters.AddWithValue("@fEventStartDate", eventData.fEventStartDate ?? (object)DBNull.Value);
@@ -303,14 +271,12 @@ namespace prjGroupB.Views
                     }
 
                     // 保存類別映射
-                    if (cmbEventCategory.SelectedItem is EventComboboxItem selectedCategory)
-                    {
+                    if (cmbEventCategory.SelectedItem is EventComboboxItem selectedCategory) {
                         SaveEventCategoryMapping(eventId, selectedCategory.Id);
                     }
 
                     // 保存圖片
-                    if (imageData.fEventImage != null)
-                    {
+                    if (imageData.fEventImage != null) {
                         string upsertImageQuery = @"
                     IF EXISTS (SELECT 1 FROM tEventImage WHERE fEventId = @fEventId)
                     BEGIN
@@ -324,8 +290,7 @@ namespace prjGroupB.Views
                         VALUES (@fEventId, @fEventImage);
                     END";
 
-                        using (SqlCommand cmd = new SqlCommand(upsertImageQuery, conn))
-                        {
+                        using (SqlCommand cmd = new SqlCommand(upsertImageQuery, conn)) {
                             cmd.Parameters.AddWithValue("@fEventId", eventId);
                             cmd.Parameters.AddWithValue("@fEventImage", imageData.fEventImage);
                             cmd.ExecuteNonQuery();
@@ -335,43 +300,36 @@ namespace prjGroupB.Views
                     MessageBox.Show("活動資料已成功儲存！");
                 }
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show($"儲存過程中發生錯誤：{ex.Message}");
             }
         }
 
-        private void FrmEventsEditor_Load(object sender, EventArgs e)
-        {
+        private void FrmEventsEditor_Load(object sender, EventArgs e) {
             InitializeComboBox();
-            if (_EventCategories.Count > 0)
-            {
+            if (_EventCategories.Count > 0) {
                 cmbEventCategory.SelectedIndex = 0; // 預設選中第一個選項
             }
-            else
-            {
+            else {
                 MessageBox.Show("無可用的活動類別資料，請檢查資料來源。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 cmbEventCategory.Enabled = false;
             }
 
             _EventCategories = new List<EventComboboxItem>();
 
-            string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
+            string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            //string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+            using (SqlConnection conn = new SqlConnection(connectionString)) {
                 conn.Open();
 
                 string query = "SELECT fEventCategoryId, fEventCategoryName FROM tEventCategories";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
+                using (SqlDataReader reader = cmd.ExecuteReader()) {
                     // 添加一個默認選項
                     _EventCategories.Add(new EventComboboxItem { Id = -1, Text = "請選擇類別" });
 
-                    while (reader.Read())
-                    {
-                        _EventCategories.Add(new EventComboboxItem
-                        {
+                    while (reader.Read()) {
+                        _EventCategories.Add(new EventComboboxItem {
                             Id = reader.GetInt32(0),       // 設置 Id 為類別的主鍵
                             Name = reader.GetString(1),    // 設置 Name 為類別名稱
                             Text = reader.GetString(1),    // 顯示的名稱
@@ -387,25 +345,22 @@ namespace prjGroupB.Views
             cmbEventCategory.ValueMember = "Id";
 
             // 確保下拉選單有資料後再設置 SelectedIndex
-            if (_EventCategories.Count > 0)
-            {
+            if (_EventCategories.Count > 0) {
                 cmbEventCategory.SelectedIndex = 0; // 預設選中第一項
             }
-            else
-            {
+            else {
                 MessageBox.Show("無可用的活動類別資料。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 cmbEventCategory.DataSource = null;
             }
         }
-        private void SaveEventCategoryMapping(int eventId, int categoryId)
-        {
-            if (eventId <= 0 || categoryId <= 0)
-            {
-                
+        private void SaveEventCategoryMapping(int eventId, int categoryId) {
+            if (eventId <= 0 || categoryId <= 0) {
+
                 return;
             }
 
-            string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+            string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            //string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
             string query = @"
     IF EXISTS (SELECT 1 FROM tEventCategoryMapping WHERE fEventId = @EventId)
     BEGIN
@@ -419,46 +374,37 @@ namespace prjGroupB.Views
         VALUES (@CategoryId, @EventId);
     END";
 
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
+            try {
+                using (SqlConnection conn = new SqlConnection(connectionString)) {
                     conn.Open();
 
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    {
+                    using (SqlCommand cmd = new SqlCommand(query, conn)) {
                         cmd.Parameters.AddWithValue("@CategoryId", categoryId);
                         cmd.Parameters.AddWithValue("@EventId", eventId);
                         cmd.ExecuteNonQuery();
                     }
                 }
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show($"儲存活動類別時發生錯誤：{ex.Message}", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
 
-        private void InitializeComboBox()
-        {
+        private void InitializeComboBox() {
             _EventCategories = new List<EventComboboxItem>
     {
         new EventComboboxItem { Id = -1, Text = "請選擇類別" } // 添加默認選項
     };
-
-            string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
+            string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True;";
+            //string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+            using (SqlConnection conn = new SqlConnection(connectionString)) {
                 conn.Open();
                 string query = "SELECT fEventCategoryId, fEventCategoryName FROM tEventCategories";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        _EventCategories.Add(new EventComboboxItem
-                        {
+                using (SqlDataReader reader = cmd.ExecuteReader()) {
+                    while (reader.Read()) {
+                        _EventCategories.Add(new EventComboboxItem {
                             Id = reader.GetInt32(0),
                             Name = reader.GetString(1),
                             Text = reader.GetString(1),
@@ -472,12 +418,10 @@ namespace prjGroupB.Views
             cmbEventCategory.DisplayMember = "Text";
             cmbEventCategory.ValueMember = "Id";
 
-            if (_EventCategories.Count > 0)
-            {
+            if (_EventCategories.Count > 0) {
                 cmbEventCategory.SelectedIndex = 0; // 預設選中第一項
             }
-            else
-            {
+            else {
                 MessageBox.Show("無可用的活動類別資料。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 cmbEventCategory.DataSource = null;
             }

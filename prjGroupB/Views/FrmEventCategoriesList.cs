@@ -15,6 +15,8 @@ namespace prjGroupB.Views
 {
     public partial class FrmEventCategoriesList : Form
     {
+        public string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
+
         private SqlDataAdapter _da;
         private DataSet _ds = null;
         private SqlCommandBuilder _builder;
@@ -100,7 +102,8 @@ namespace prjGroupB.Views
         private void displayEventsBySql(string sql, bool isKeyword)
         {
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            con.ConnectionString = connectString;
             con.Open();
             _da = new SqlDataAdapter(sql, con);
             if (isKeyword)

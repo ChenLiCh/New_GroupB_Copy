@@ -13,6 +13,7 @@ namespace prjGroupB.Views
 {
     public partial class FrmEventRegistrationinformation : Form
     {
+        public string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
         public FrmEventRegistrationinformation()
         {
             InitializeComponent();
@@ -27,7 +28,8 @@ namespace prjGroupB.Views
 
         private void LoadRegistrationData()
         {
-            string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+            string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
             string query = @"
     SELECT
         r.fEventRegistrationFormId AS [報名編號],
@@ -81,7 +83,8 @@ namespace prjGroupB.Views
                 // 確認資料行名稱是否正確
                 int registrationId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
 
-                string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+                string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+                //string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
                 string query = "DELETE FROM tEventRegistrationForm WHERE fEventRegistrationFormId = @fEventRegistrationFormId";
 
                 try
@@ -115,7 +118,8 @@ namespace prjGroupB.Views
         {
             string keyword = txtSearch.Text.Trim();
 
-            string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+            string connectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //string connectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
             string query = @"
                 SELECT
                     r.fEventRegistrationFormId AS [報名編號],

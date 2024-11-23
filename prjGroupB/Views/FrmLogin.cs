@@ -18,7 +18,7 @@ namespace prjGroupB.Views
 
     public partial class FrmLogin : Form
     {
-        //public string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
+        public string pipe = "np:\\\\.\\pipe\\LOCALDB#570BB2F1\\tsql\\query;";
 
         public event D DshowBackend;
 
@@ -46,8 +46,8 @@ namespace prjGroupB.Views
             sql += " AND fUserPassword = @K_FPASSWORD";
 
             SqlConnection con = new SqlConnection();
-            //con.ConnectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
-            con.ConnectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
+            con.ConnectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //con.ConnectionString = @"Data Source = .; Initial Catalog = dbGroupB; Integrated Security = True;";
             con.Open();
 
             SqlCommand cmd = new SqlCommand();
@@ -61,7 +61,7 @@ namespace prjGroupB.Views
                 CUserSession.fUserId = Convert.ToInt32(reader["fUserId"]);
                 CUserSession.fRankId = Convert.ToInt32(reader["fUserRankId"]);
                 _isClosed = false;
-                if (CUserSession.fRankId == 99)
+                if (CUserSession.fRankId == 5)
                     DshowBackend(true);
                 Close();
             }
@@ -87,7 +87,8 @@ namespace prjGroupB.Views
             SqlCommandBuilder _builder;
             //連到tUser資料夾
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
+            con.ConnectionString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            //con.ConnectionString = @"Data Source=.;Initial Catalog=dbGroupB;Integrated Security=True;";
             con.Open();
 
             _da = new SqlDataAdapter(sql, con);

@@ -10,9 +10,11 @@ namespace prjGroupB.Models
 {
     public class COrderManagement
     {
+        public string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
         public void creatOrder(Namespace.A.COrder order)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=.;Database = dbGroupB; Integrated Security = SSPI");
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            SqlConnection con = new SqlConnection(connectString);
             con.Open();
             SqlTransaction transaction = con.BeginTransaction();
             try
@@ -58,7 +60,8 @@ namespace prjGroupB.Models
         }
         public void UpdateOrder(Namespace.B.COrder order)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=.;Database = dbGroupB; Integrated Security = SSPI");
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            SqlConnection con = new SqlConnection(connectString);
             string sql = "UPDATE tOrders SET fShipAddress = @ShipAddress, fOrderStatusId = @OrderStatusId WHERE fOrderId = @OrderId";
 
             using (SqlCommand cmd = new SqlCommand(sql, con))

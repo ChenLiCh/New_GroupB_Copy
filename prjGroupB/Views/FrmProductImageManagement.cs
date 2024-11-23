@@ -17,6 +17,7 @@ namespace prjGroupB.Views
 
     public partial class FrmProductImageManagement : Form
     {
+        public string pipe = "np:\\\\.\\pipe\\LOCALDB#B5FE6A17\\tsql\\query;";
         private CProductImage _image = new CProductImage();
         private CProduct _product;
 
@@ -109,7 +110,10 @@ namespace prjGroupB.Views
         private void displayProductsBySql(string sql)
         {
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = @"Data Source=.;Database = dbGroupB; " + "Integrated Security = SSPI";
+            string connectString = @"Data Source=" + pipe + "Initial Catalog=dbGroupB;Integrated Security=True";
+            con.ConnectionString = connectString;
+
+            //con.ConnectionString = @"Data Source=.;Database = dbGroupB; " + "Integrated Security = SSPI";
             con.Open();
             _da = new SqlDataAdapter(sql, con);
             _builder = new SqlCommandBuilder();
